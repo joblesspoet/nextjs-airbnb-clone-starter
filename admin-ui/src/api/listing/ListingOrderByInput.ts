@@ -4,12 +4,11 @@ export type ListingOrderByInput = {
   createdAt?: SortOrder;
   description?: SortOrder;
   id?: SortOrder;
-  listingCreatedById?: SortOrder;
+  user_created_listing?: SortOrder;
   locationData?: SortOrder;
   locationType?: SortOrder;
   mapData?: SortOrder;
   photos?: SortOrder;
-  placeAmeneties?: SortOrder;
   placeSpace?: SortOrder;
   placeType?: SortOrder;
   price?: SortOrder;

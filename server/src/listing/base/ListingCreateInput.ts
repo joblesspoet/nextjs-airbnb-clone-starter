@@ -11,18 +11,12 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import {
-  IsString,
-  ValidateNested,
-  IsNumber,
-  IsOptional,
-} from "class-validator";
+import { IsString, ValidateNested, IsOptional, IsInt } from "class-validator";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 import { Type } from "class-transformer";
 import { IsJSONValue } from "@app/custom-validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
-import { TripCreateNestedManyWithoutListingsInput } from "./TripCreateNestedManyWithoutListingsInput";
 import { WishlistCreateNestedManyWithoutListingsInput } from "./WishlistCreateNestedManyWithoutListingsInput";
 
 @InputType()
@@ -36,20 +30,26 @@ class ListingCreateInput {
   description!: string;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: () => UserWhereUniqueInput,
   })
   @ValidateNested()
   @Type(() => UserWhereUniqueInput)
-  @Field(() => UserWhereUniqueInput)
-  listingCreatedBy!: UserWhereUniqueInput;
+  @IsOptional()
+  @Field(() => UserWhereUniqueInput, {
+    nullable: true,
+  })
+  listingCreatedBy?: UserWhereUniqueInput | null;
 
   @ApiProperty({
-    required: true,
+    required: false,
   })
   @IsJSONValue()
-  @Field(() => GraphQLJSON)
-  locationData!: InputJsonValue;
+  @IsOptional()
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
+  locationData?: InputJsonValue;
 
   @ApiProperty({
     required: true,
@@ -60,48 +60,56 @@ class ListingCreateInput {
   locationType!: string;
 
   @ApiProperty({
-    required: true,
+    required: false,
   })
   @IsJSONValue()
-  @Field(() => GraphQLJSON)
-  mapData!: InputJsonValue;
+  @IsOptional()
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
+  mapData?: InputJsonValue;
 
   @ApiProperty({
-    required: true,
+    required: false,
   })
   @IsJSONValue()
-  @Field(() => GraphQLJSON)
-  photos!: InputJsonValue;
+  @IsOptional()
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
+  photos?: InputJsonValue;
 
   @ApiProperty({
-    required: true,
+    required: false,
   })
   @IsJSONValue()
-  @Field(() => GraphQLJSON)
-  placeAmeneties!: InputJsonValue;
-
-  @ApiProperty({
-    required: true,
+  @IsOptional()
+  @Field(() => GraphQLJSON, {
+    nullable: true,
   })
-  @IsJSONValue()
-  @Field(() => GraphQLJSON)
-  placeSpace!: InputJsonValue;
+  placeSpace?: InputJsonValue;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: String,
   })
   @IsString()
-  @Field(() => String)
-  placeType!: string;
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  placeType?: string | null;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: Number,
   })
-  @IsNumber()
-  @Field(() => Number)
-  price!: number;
+  @IsInt()
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  price?: number | null;
 
   @ApiProperty({
     required: true,
@@ -110,18 +118,6 @@ class ListingCreateInput {
   @IsString()
   @Field(() => String)
   title!: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => TripCreateNestedManyWithoutListingsInput,
-  })
-  @ValidateNested()
-  @Type(() => TripCreateNestedManyWithoutListingsInput)
-  @IsOptional()
-  @Field(() => TripCreateNestedManyWithoutListingsInput, {
-    nullable: true,
-  })
-  trips?: TripCreateNestedManyWithoutListingsInput;
 
   @ApiProperty({
     required: false,
