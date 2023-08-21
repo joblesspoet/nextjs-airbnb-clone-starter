@@ -15,15 +15,14 @@ import {
   IsDate,
   IsString,
   ValidateNested,
-  IsNumber,
   IsOptional,
+  IsInt,
 } from "class-validator";
 import { Type } from "class-transformer";
 import { User } from "../../user/base/User";
 import { IsJSONValue } from "@app/custom-validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { JsonValue } from "type-fest";
-import { Trip } from "../../trip/base/Trip";
 import { Wishlist } from "../../wishlist/base/Wishlist";
 
 @ObjectType()
@@ -53,18 +52,22 @@ class Listing {
   id!: string;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: () => User,
   })
   @ValidateNested()
   @Type(() => User)
-  listingCreatedBy?: User;
+  @IsOptional()
+  listingCreatedBy?: User | null;
 
   @ApiProperty({
-    required: true,
+    required: false,
   })
   @IsJSONValue()
-  @Field(() => GraphQLJSON)
+  @IsOptional()
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
   locationData!: JsonValue;
 
   @ApiProperty({
@@ -76,48 +79,56 @@ class Listing {
   locationType!: string;
 
   @ApiProperty({
-    required: true,
+    required: false,
   })
   @IsJSONValue()
-  @Field(() => GraphQLJSON)
+  @IsOptional()
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
   mapData!: JsonValue;
 
   @ApiProperty({
-    required: true,
+    required: false,
   })
   @IsJSONValue()
-  @Field(() => GraphQLJSON)
+  @IsOptional()
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
   photos!: JsonValue;
 
   @ApiProperty({
-    required: true,
+    required: false,
   })
   @IsJSONValue()
-  @Field(() => GraphQLJSON)
-  placeAmeneties!: JsonValue;
-
-  @ApiProperty({
-    required: true,
+  @IsOptional()
+  @Field(() => GraphQLJSON, {
+    nullable: true,
   })
-  @IsJSONValue()
-  @Field(() => GraphQLJSON)
   placeSpace!: JsonValue;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: String,
   })
   @IsString()
-  @Field(() => String)
-  placeType!: string;
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  placeType!: string | null;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: Number,
   })
-  @IsNumber()
-  @Field(() => Number)
-  price!: number;
+  @IsInt()
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  price!: number | null;
 
   @ApiProperty({
     required: true,
@@ -126,15 +137,6 @@ class Listing {
   @IsString()
   @Field(() => String)
   title!: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => [Trip],
-  })
-  @ValidateNested()
-  @Type(() => Trip)
-  @IsOptional()
-  trips?: Array<Trip>;
 
   @ApiProperty({
     required: true,

@@ -11,18 +11,12 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import {
-  IsString,
-  IsOptional,
-  ValidateNested,
-  IsNumber,
-} from "class-validator";
+import { IsString, IsOptional, ValidateNested, IsInt } from "class-validator";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 import { Type } from "class-transformer";
 import { IsJSONValue } from "@app/custom-validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
-import { TripUpdateManyWithoutListingsInput } from "./TripUpdateManyWithoutListingsInput";
 import { WishlistUpdateManyWithoutListingsInput } from "./WishlistUpdateManyWithoutListingsInput";
 
 @InputType()
@@ -48,7 +42,7 @@ class ListingUpdateInput {
   @Field(() => UserWhereUniqueInput, {
     nullable: true,
   })
-  listingCreatedBy?: UserWhereUniqueInput;
+  listingCreatedBy?: UserWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,
@@ -99,16 +93,6 @@ class ListingUpdateInput {
   @Field(() => GraphQLJSON, {
     nullable: true,
   })
-  placeAmeneties?: InputJsonValue;
-
-  @ApiProperty({
-    required: false,
-  })
-  @IsJSONValue()
-  @IsOptional()
-  @Field(() => GraphQLJSON, {
-    nullable: true,
-  })
   placeSpace?: InputJsonValue;
 
   @ApiProperty({
@@ -120,18 +104,18 @@ class ListingUpdateInput {
   @Field(() => String, {
     nullable: true,
   })
-  placeType?: string;
+  placeType?: string | null;
 
   @ApiProperty({
     required: false,
     type: Number,
   })
-  @IsNumber()
+  @IsInt()
   @IsOptional()
   @Field(() => Number, {
     nullable: true,
   })
-  price?: number;
+  price?: number | null;
 
   @ApiProperty({
     required: false,
@@ -143,18 +127,6 @@ class ListingUpdateInput {
     nullable: true,
   })
   title?: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => TripUpdateManyWithoutListingsInput,
-  })
-  @ValidateNested()
-  @Type(() => TripUpdateManyWithoutListingsInput)
-  @IsOptional()
-  @Field(() => TripUpdateManyWithoutListingsInput, {
-    nullable: true,
-  })
-  trips?: TripUpdateManyWithoutListingsInput;
 
   @ApiProperty({
     required: false,

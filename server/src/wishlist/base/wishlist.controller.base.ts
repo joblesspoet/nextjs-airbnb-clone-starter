@@ -51,13 +51,17 @@ export class WishlistControllerBase {
       data: {
         ...data,
 
-        listing: {
-          connect: data.listing,
-        },
+        listing: data.listing
+          ? {
+              connect: data.listing,
+            }
+          : undefined,
 
-        user: {
-          connect: data.user,
-        },
+        user: data.user
+          ? {
+              connect: data.user,
+            }
+          : undefined,
       },
       select: {
         createdAt: true,
@@ -183,13 +187,17 @@ export class WishlistControllerBase {
         data: {
           ...data,
 
-          listing: {
-            connect: data.listing,
-          },
+          listing: data.listing
+            ? {
+                connect: data.listing,
+              }
+            : undefined,
 
-          user: {
-            connect: data.user,
-          },
+          user: data.user
+            ? {
+                connect: data.user,
+              }
+            : undefined,
         },
         select: {
           createdAt: true,

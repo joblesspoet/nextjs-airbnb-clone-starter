@@ -32,30 +32,11 @@ export const ListingShow = (props: ShowProps): React.ReactElement => {
         <TextField label="locationType" source="locationType" />
         <TextField label="mapData" source="mapData" />
         <TextField label="photos" source="photos" />
-        <TextField label="placeAmeneties" source="placeAmeneties" />
         <TextField label="placeSpace" source="placeSpace" />
         <TextField label="placeType" source="placeType" />
         <TextField label="price" source="price" />
         <TextField label="title" source="title" />
         <DateField source="updatedAt" label="Updated At" />
-        <ReferenceManyField reference="Trip" target="listingId" label="trips">
-          <Datagrid rowClick="show">
-            <DateField source="createdAt" label="Created At" />
-            <TextField label="ID" source="id" />
-            <ReferenceField
-              label="listing"
-              source="listing.id"
-              reference="Listing"
-            >
-              <TextField source={LISTING_TITLE_FIELD} />
-            </ReferenceField>
-            <TextField label="tripInfo" source="tripInfo" />
-            <DateField source="updatedAt" label="Updated At" />
-            <ReferenceField label="user" source="user.id" reference="User">
-              <TextField source={USER_TITLE_FIELD} />
-            </ReferenceField>
-          </Datagrid>
-        </ReferenceManyField>
         <ReferenceManyField
           reference="Wishlist"
           target="listingId"

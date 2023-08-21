@@ -12,12 +12,11 @@ https://docs.amplication.com/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsOptional, ValidateNested } from "class-validator";
-import { ListingCreateNestedManyWithoutUsersInput } from "./ListingCreateNestedManyWithoutUsersInput";
+import { ListingWhereUniqueInput } from "../../listing/base/ListingWhereUniqueInput";
 import { Type } from "class-transformer";
 import { IsJSONValue } from "@app/custom-validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
-import { TripCreateNestedManyWithoutUsersInput } from "./TripCreateNestedManyWithoutUsersInput";
 import { WishlistCreateNestedManyWithoutUsersInput } from "./WishlistCreateNestedManyWithoutUsersInput";
 
 @InputType()
@@ -46,15 +45,15 @@ class UserCreateInput {
 
   @ApiProperty({
     required: false,
-    type: () => ListingCreateNestedManyWithoutUsersInput,
+    type: () => ListingWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => ListingCreateNestedManyWithoutUsersInput)
+  @Type(() => ListingWhereUniqueInput)
   @IsOptional()
-  @Field(() => ListingCreateNestedManyWithoutUsersInput, {
+  @Field(() => ListingWhereUniqueInput, {
     nullable: true,
   })
-  listings?: ListingCreateNestedManyWithoutUsersInput;
+  listings?: ListingWhereUniqueInput | null;
 
   @ApiProperty({
     required: true,
@@ -70,18 +69,6 @@ class UserCreateInput {
   @IsJSONValue()
   @Field(() => GraphQLJSON)
   roles!: InputJsonValue;
-
-  @ApiProperty({
-    required: false,
-    type: () => TripCreateNestedManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => TripCreateNestedManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => TripCreateNestedManyWithoutUsersInput, {
-    nullable: true,
-  })
-  trips?: TripCreateNestedManyWithoutUsersInput;
 
   @ApiProperty({
     required: true,

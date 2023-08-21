@@ -16,8 +16,8 @@ import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 import { JsonFilter } from "../../util/JsonFilter";
-import { FloatFilter } from "../../util/FloatFilter";
-import { TripListRelationFilter } from "../../trip/base/TripListRelationFilter";
+import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { IntNullableFilter } from "../../util/IntNullableFilter";
 import { WishlistListRelationFilter } from "../../wishlist/base/WishlistListRelationFilter";
 
 @InputType()
@@ -109,40 +109,29 @@ class ListingWhereInput {
   @Field(() => JsonFilter, {
     nullable: true,
   })
-  placeAmeneties?: JsonFilter;
-
-  @ApiProperty({
-    required: false,
-    type: JsonFilter,
-  })
-  @Type(() => JsonFilter)
-  @IsOptional()
-  @Field(() => JsonFilter, {
-    nullable: true,
-  })
   placeSpace?: JsonFilter;
 
   @ApiProperty({
     required: false,
-    type: StringFilter,
+    type: StringNullableFilter,
   })
-  @Type(() => StringFilter)
+  @Type(() => StringNullableFilter)
   @IsOptional()
-  @Field(() => StringFilter, {
+  @Field(() => StringNullableFilter, {
     nullable: true,
   })
-  placeType?: StringFilter;
+  placeType?: StringNullableFilter;
 
   @ApiProperty({
     required: false,
-    type: FloatFilter,
+    type: IntNullableFilter,
   })
-  @Type(() => FloatFilter)
+  @Type(() => IntNullableFilter)
   @IsOptional()
-  @Field(() => FloatFilter, {
+  @Field(() => IntNullableFilter, {
     nullable: true,
   })
-  price?: FloatFilter;
+  price?: IntNullableFilter;
 
   @ApiProperty({
     required: false,
@@ -154,18 +143,6 @@ class ListingWhereInput {
     nullable: true,
   })
   title?: StringFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => TripListRelationFilter,
-  })
-  @ValidateNested()
-  @Type(() => TripListRelationFilter)
-  @IsOptional()
-  @Field(() => TripListRelationFilter, {
-    nullable: true,
-  })
-  trips?: TripListRelationFilter;
 
   @ApiProperty({
     required: false,

@@ -28,7 +28,7 @@ class WishlistUpdateInput {
   @Field(() => ListingWhereUniqueInput, {
     nullable: true,
   })
-  listing?: ListingWhereUniqueInput;
+  listing?: ListingWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,
@@ -40,7 +40,7 @@ class WishlistUpdateInput {
   @Field(() => UserWhereUniqueInput, {
     nullable: true,
   })
-  user?: UserWhereUniqueInput;
+  user?: UserWhereUniqueInput | null;
 }
 
 export { WishlistUpdateInput as WishlistUpdateInput };

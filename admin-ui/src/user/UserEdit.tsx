@@ -5,13 +5,14 @@ import {
   SimpleForm,
   EditProps,
   TextInput,
-  ReferenceArrayInput,
-  SelectArrayInput,
+  ReferenceInput,
+  SelectInput,
   PasswordInput,
+  SelectArrayInput,
+  ReferenceArrayInput,
 } from "react-admin";
 
 import { ListingTitle } from "../listing/ListingTitle";
-import { TripTitle } from "../trip/TripTitle";
 import { WishlistTitle } from "../wishlist/WishlistTitle";
 import { ROLES_OPTIONS } from "../user/RolesOptions";
 
@@ -21,14 +22,13 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
       <SimpleForm>
         <TextInput label="First Name" source="firstName" />
         <TextInput label="Last Name" source="lastName" />
-        <ReferenceArrayInput
-          source="listings"
+        <ReferenceInput
+          source="listings.id"
           reference="Listing"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
+          label="listings"
         >
-          <SelectArrayInput optionText={ListingTitle} />
-        </ReferenceArrayInput>
+          <SelectInput optionText={ListingTitle} />
+        </ReferenceInput>
         <PasswordInput label="Password" source="password" />
         <SelectArrayInput
           source="roles"
@@ -36,14 +36,6 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
           optionText="label"
           optionValue="value"
         />
-        <ReferenceArrayInput
-          source="trips"
-          reference="Trip"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={TripTitle} />
-        </ReferenceArrayInput>
         <TextInput label="Username" source="username" />
         <ReferenceArrayInput
           source="wishlists"

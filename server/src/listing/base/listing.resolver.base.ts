@@ -26,8 +26,6 @@ import { ListingCountArgs } from "./ListingCountArgs";
 import { ListingFindManyArgs } from "./ListingFindManyArgs";
 import { ListingFindUniqueArgs } from "./ListingFindUniqueArgs";
 import { Listing } from "./Listing";
-import { TripFindManyArgs } from "../../trip/base/TripFindManyArgs";
-import { Trip } from "../../trip/base/Trip";
 import { WishlistFindManyArgs } from "../../wishlist/base/WishlistFindManyArgs";
 import { Wishlist } from "../../wishlist/base/Wishlist";
 import { User } from "../../user/base/User";
@@ -100,9 +98,11 @@ export class ListingResolverBase {
       data: {
         ...args.data,
 
-        listingCreatedBy: {
-          connect: args.data.listingCreatedBy,
-        },
+        listingCreatedBy: args.data.listingCreatedBy
+          ? {
+              connect: args.data.listingCreatedBy,
+            }
+          : undefined,
       },
     });
   }
@@ -123,9 +123,11 @@ export class ListingResolverBase {
         data: {
           ...args.data,
 
-          listingCreatedBy: {
-            connect: args.data.listingCreatedBy,
-          },
+          listingCreatedBy: args.data.listingCreatedBy
+            ? {
+                connect: args.data.listingCreatedBy,
+              }
+            : undefined,
         },
       });
     } catch (error) {
@@ -157,26 +159,6 @@ export class ListingResolverBase {
       }
       throw error;
     }
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => [Trip], { name: "trips" })
-  @nestAccessControl.UseRoles({
-    resource: "Trip",
-    action: "read",
-    possession: "any",
-  })
-  async resolveFieldTrips(
-    @graphql.Parent() parent: Listing,
-    @graphql.Args() args: TripFindManyArgs
-  ): Promise<Trip[]> {
-    const results = await this.service.findTrips(parent.id, args);
-
-    if (!results) {
-      return [];
-    }
-
-    return results;
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)

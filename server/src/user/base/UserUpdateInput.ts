@@ -12,12 +12,11 @@ https://docs.amplication.com/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsOptional, ValidateNested } from "class-validator";
-import { ListingUpdateManyWithoutUsersInput } from "./ListingUpdateManyWithoutUsersInput";
+import { ListingWhereUniqueInput } from "../../listing/base/ListingWhereUniqueInput";
 import { Type } from "class-transformer";
 import { IsJSONValue } from "@app/custom-validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
-import { TripUpdateManyWithoutUsersInput } from "./TripUpdateManyWithoutUsersInput";
 import { WishlistUpdateManyWithoutUsersInput } from "./WishlistUpdateManyWithoutUsersInput";
 
 @InputType()
@@ -46,15 +45,15 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => ListingUpdateManyWithoutUsersInput,
+    type: () => ListingWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => ListingUpdateManyWithoutUsersInput)
+  @Type(() => ListingWhereUniqueInput)
   @IsOptional()
-  @Field(() => ListingUpdateManyWithoutUsersInput, {
+  @Field(() => ListingWhereUniqueInput, {
     nullable: true,
   })
-  listings?: ListingUpdateManyWithoutUsersInput;
+  listings?: ListingWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,
@@ -76,18 +75,6 @@ class UserUpdateInput {
     nullable: true,
   })
   roles?: InputJsonValue;
-
-  @ApiProperty({
-    required: false,
-    type: () => TripUpdateManyWithoutUsersInput,
-  })
-  @ValidateNested()
-  @Type(() => TripUpdateManyWithoutUsersInput)
-  @IsOptional()
-  @Field(() => TripUpdateManyWithoutUsersInput, {
-    nullable: true,
-  })
-  trips?: TripUpdateManyWithoutUsersInput;
 
   @ApiProperty({
     required: false,
